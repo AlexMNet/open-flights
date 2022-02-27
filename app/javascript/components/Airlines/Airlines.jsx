@@ -7,6 +7,7 @@ const Home = styled.div`
   text-align: center;
   max-width: 1200px;
   margin-left: auto;
+  margin-right: auto;
 `
 const Header = styled.div`
   padding: 100px 100px 10px 100px;
