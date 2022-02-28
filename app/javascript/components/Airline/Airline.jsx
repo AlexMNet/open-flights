@@ -4,6 +4,7 @@ import axios from 'axios'
 import Header from './Header'
 import styled from 'styled-components'
 import ReviewForm from './ReviewForm'
+import Review from './Review'
 
 const Wrapper = styled.div`
   margin-left: auto;
@@ -24,9 +25,14 @@ const Main = styled.div`
   padding-left: 50px;
 `
 
+const initialReviewData = {
+  title: '',
+  description: '',
+  score: 0,
+}
 const Airline = (props) => {
   const [airline, setAirline] = useState({})
-  const [review, setReview] = useState({})
+  const [review, setReview] = useState(initialReviewData)
   const [loaded, setLoaded] = useState(false)
 
   const { slug } = useParams()
@@ -60,7 +66,7 @@ const Airline = (props) => {
     axios
       .post('/api/v1/reviews', { review, airline_id })
       .then((res) => {
-        const included = [...airline.included, res.data]
+        const included = [...airline.included, res.data.data]
         setAirline({ ...airline, included })
         setReview({ title: '', description: '', score: 0 })
       })
@@ -71,6 +77,13 @@ const Airline = (props) => {
     e.preventDefault()
 
     setReview({ ...review, score })
+  }
+
+  let reviews
+  if (loaded && airline.included) {
+    reviews = airline.included.map((item, idx) => (
+      <Review key={idx} attributes={item.attributes} />
+    ))
   }
 
   return (
@@ -84,7 +97,7 @@ const Airline = (props) => {
                 reviews={airline.included}
               />
             </Main>
-            <div className="reviews"></div>
+            {reviews}
           </Column>
           <Column>
             <ReviewForm

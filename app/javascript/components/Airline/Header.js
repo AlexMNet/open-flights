@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -23,6 +24,8 @@ const TotalOutOf = styled.div`
   padding: 10px 0;
 `
 
+const linkStyle = { fontSize: '16px' }
+
 const Header = (props) => {
   const { name, image_url, avg_score } = props.attributes
   const total = props.reviews.length
@@ -34,7 +37,10 @@ const Header = (props) => {
       </h1>
       <TotalReviews>{total} User Reviews</TotalReviews>
       <div className="starRating"></div>
-      <TotalOutOf>{avg_score} our of 5</TotalOutOf>
+      <TotalOutOf>{avg_score} out of 5</TotalOutOf>
+      <Link to="/" style={linkStyle}>
+        back home
+      </Link>
     </Wrapper>
   )
 }
