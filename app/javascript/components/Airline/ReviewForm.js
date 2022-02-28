@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import Gray from './stars/Gray'
 import Hover from './stars/Hover'
@@ -106,9 +106,8 @@ const RatingTitle = styled.div`
 
 const ReviewForm = (props) => {
   const ratingOptions = [5, 4, 3, 2, 1].map((score, idx) => (
-    <>
+    <Fragment key={idx}>
       <input
-        key={idx}
         type="radio"
         value={score}
         name="rating"
@@ -117,7 +116,7 @@ const ReviewForm = (props) => {
         checked={props.review.score == score}
       />
       <label onClick={props.setRating.bind(this, score)}></label>
-    </>
+    </Fragment>
   ))
   return (
     <Wrapper>
@@ -130,6 +129,7 @@ const ReviewForm = (props) => {
             onChange={props.handleChange}
             value={props.review.title}
             type="text"
+            id="title"
             name="title"
             placeholder="Review Title"
           />
@@ -139,6 +139,7 @@ const ReviewForm = (props) => {
             onChange={props.handleChange}
             value={props.review.description}
             type="text"
+            id="description"
             name="description"
             placeholder="Review Description"
           />
